@@ -1,0 +1,25 @@
+{
+    "name": "KaZeTab",
+    "version": "1.0", 
+    "manifest_version": 3, 
+    "description": "Changes new tab with type of wallpaper you want!",
+    "permissions": [],
+    "content_scripts":[
+        {
+            "matches":["<all_urls>"],
+            "js": ["background.js"],
+            "css": ["./css/styles.css"]
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "action":{
+        "default_icon": {
+             
+        },
+        "default_popup": "popup.html" 
+    }  
+           
+}
