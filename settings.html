@@ -18,11 +18,11 @@
  
    
   
-  <div class="col" style="display: flex; justify-content: center; font-size: medium;"> 
-    <label for="Wallpaper-options" style="display: flex; justify-content: center; margin: 5px;">
+  <div class="col" style="display: flex; justify-content: center; font-size: medium; margin-top: 10px;"> 
+    <label for="Wallpaper-options" style="display: flex; justify-content: center; margin-right: 2px;">
       Select the Wallpaper type:
     </label>
-    <select id="Wallpaper-options" class="form-select">
+    <select id="Wallpaper-options" class="form-select" style="margin-left: 3px;">
       <option value="Tech">Tech</option>
       <option value="Nature">Nature</option>
       <option value="Anime">Anime</option>
@@ -32,15 +32,41 @@
   </div>
   
 </div>
-<div id="typeagenre" class="hiddenc row mb-4 align-items-center" style=" justify-content: center; margin-top: 5px;">
-   <label for="genre-input" class="col-auto" style="margin: 5px;  font-size: medium;">Type a genre:</label>
-   <input type="text" id="genre-input">
+<div id="typeagenre" class="hiddenc" style="justify-content: center; align-items: center; margin-top: 10px;">
+   <label for="genre-input" class="" style="font-size: medium;">Type a genre:</label>
+   <input type="text" id="genre-input" style="margin-left: 3px;">
 </div>
 <div id="custom" class="hiddenc">
   <button
   class="btn">
 Upload your custom image</button>
 </div>
+<div class="quote" id="quote" style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+  <label for="Wallpaper-options" style="display: flex; justify-content: center; margin: 5px; font-size: medium;">
+      Select the quote type:
+    </label>
+   <Select id="quote-options">
+    <option selected value="none">None</option>
+    <option value="default">Default</option>
+    <option value="Custom">Custom</option>
+   </Select>
+</div>
+
+<div id="quote_custom_div" class="hiddenc" style="justify-content: center; align-items: center; margin-top: 10px;">
+   <label for="quote_input" style="font-size: medium;">Enter your Custom Quote:</label>
+   <input type="text" id="quote_input" style="margin-left: 3px;">
+</div>
+<div  style="justify-content: center; align-items: center; margin-top: 10px;">
+  
+  <label for="weather_input" style="margin-left: 2px; font-size: medium;">Enter your city for weather (optional):</label>
+  <input type="text" name="" id="weather_input">
+</div>
+
+<div class=""  style="display: flex; justify-content: center; align-items: center; margin-top: 10px; font-size: medium;"
+><input type="checkbox"> <label for="timebased_greetings" >Time Based Greetings</label>
+ 
+</div>
+
     </div>
 </div>
 <script src="scripts/settings.js"></script>
