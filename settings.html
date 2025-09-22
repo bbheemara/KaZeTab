@@ -4,35 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <meta http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net;">
+    <!-- <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net;"> -->
+    <link rel="stylesheet" href="./css/settings.css">
+      <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 
-    <link rel="stylesheet" href="css/settings.css">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script> 
 </head>
 <body class="bg-dark">
     <div class="border-1" id="inner-body">
-    <h1 class="text-white justify-content-center d-flex mt-2">Settings</h1>
+    <h1 class="text-white justify-content-center d-flex mt-2" style="display: flex; justify-content: center;">Settings</h1>
     <div id="Wallpaper" class="justify-content-center d-flex mt-4">
 <div class="row mb-4 align-items-center">
-  <div class="col-auto">
-    <label for="Wallpaper-options" class="text-white mb-0">
+ 
+   
+  
+  <div class="col" style="display: flex; justify-content: center; font-size: medium;"> 
+    <label for="Wallpaper-options" style="display: flex; justify-content: center; margin: 5px;">
       Select the Wallpaper type:
     </label>
-  </div>
-  <div class="col">
     <select id="Wallpaper-options" class="form-select">
-      <option value="1">Tech</option>
-      <option value="2">Nature</option>
-      <option value="3">Anime</option>
-      <option value="4">Type a Genre</option>
-      <option value="5">Custom</option>
+      <option value="Tech">Tech</option>
+      <option value="Nature">Nature</option>
+      <option value="Anime">Anime</option>
+      <option value="typeagenre">Type a Genre</option>
+      <option value="custom">Custom</option>
     </select>
   </div>
+  
+</div>
+<div id="typeagenre" class="hiddenc row mb-4 align-items-center" style=" justify-content: center; margin-top: 5px;">
+   <label for="genre-input" class="col-auto" style="margin: 5px;  font-size: medium;">Type a genre:</label>
+   <input type="text" id="genre-input">
+</div>
+<div id="custom" class="hiddenc">
+  <button
+  class="btn">
+Upload your custom image</button>
 </div>
     </div>
 </div>
+<script src="scripts/settings.js"></script>
 </body>
 </html>

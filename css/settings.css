@@ -1,8 +1,9 @@
 body{
-
+  background-color: rgb(45, 45, 45);
     height: 400px;
     width: 400px;
     font-family: 'AnimeFont', sans-serif;
+    color: white;
 }
 
 @font-face {
@@ -10,4 +11,12 @@ body{
   src: url('../fonts/font1.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+}
+
+.hiddenc {
+    display: none;
+}
+
+.visible {
+display: flex;
 }
