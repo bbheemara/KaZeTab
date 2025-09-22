@@ -1,14 +1,13 @@
+body{
+
+    height: 400px;
+    width: 400px;
+    font-family: 'AnimeFont', sans-serif;
+}
+
 @font-face {
   font-family: 'AnimeFont';
   src: url('../fonts/font1.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-}
-
-
-body{
-    font-family: 'AnimeFont', sans-serif;
-
-    height: 200px;
-    width: 300px;
 }
