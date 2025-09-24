@@ -6,18 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KaZeTab - New Tab</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
 </head>
 
 <body>
-    <div id="wallpaper-container"> 
+    <div id="wallpaper-container">
         <div id="content-overlay">
             <div id="greeting-section">
                 <h1 id="greeting-text">Welcome!</h1>
-            </div> 
+            </div>
+
+
 
 
         </div>
+       <div id="search-section" 
+     style="display: flex; justify-content: center; align-items: center; margin-top: 3px; width: 100vw; height: 100vh;">
+
+    <form action="https://www.google.com/search" method="GET" target="_blank">
+        <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text">></span>
+            <input type="text" placeholder="input into 'internet'" name="q" class="form-control" style="width: 600px; height: 40px;">
+            <button class="btn btn-secondary" type="submit">Search
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+</svg>
+            </button>
+        </div>
+    </form>
+</div>
+
     </div>
 
     <script src="scripts/newtab.js"></script>

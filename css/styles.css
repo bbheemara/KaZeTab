@@ -17,7 +17,7 @@ body {
     /* font-family: 'Arial', sans-serif; */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     overflow: hidden;   
-     font-family: 'AnimeFont', sans-serif;
+    font-family: 'AnimeFont', sans-serif;
 
 }
 
@@ -42,7 +42,8 @@ body {
     text-align: center;
 }
 
-#greeting-section h1 {    
+#greeting-section h1 {   
+    font-family: 'AnimeFont', sans-serif; 
 
     font-size: 3rem;
     margin-bottom: 39rem;
@@ -50,7 +51,9 @@ body {
     margin-left: 5rem;
     margin-top: 5rem;
 }
+#search-section { position: relative; z-index: 10; 
 
+}
 
 .hidden {
     display: none !important;
