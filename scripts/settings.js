@@ -1,9 +1,10 @@
-
 document.addEventListener('DOMContentLoaded', () => {
-  if (!document.getElementById('Wallpaper-options')) {
-  return;
-}
-  
+  const wallpaper_id = document.getElementById("Wallpaper-options");
+  const type_a_genre = document.getElementById("typeagenre");
+  const custom = document.getElementById("custom");
+  const quote_id = document.getElementById("quote-options");
+  const quote_input = document.getElementById("quote_custom_div");
+  const form = document.getElementById("settings-form");
 
   if (typeof chrome === 'undefined' || !chrome.storage) {
     console.error("Chrome extension APIs not available");
@@ -11,12 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  const wallpaper_id = document.getElementById("Wallpaper-options");
-  const type_a_genre = document.getElementById("typeagenre");
-  const custom = document.getElementById("custom");
-  const quote_id = document.getElementById("quote-options");
-  const quote_input = document.getElementById("quote_custom_div");
-  const form = document.getElementById("settings-form");
+ 
   // took help from ai to reframe some parts like chrome.storage and for debugging parts as am mid in js:( 
   if (!wallpaper_id || !form) {
     console.error("Required elements not found");
@@ -24,35 +20,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   wallpaper_id.addEventListener("change", () => {
-    type_a_genre.classList.add("hiddenc");
-    type_a_genre.classList.remove("visible");
-    custom.classList.add("hiddenc");
-    custom.classList.remove("visible");
+    if (type_a_genre) {
+      type_a_genre.classList.add("hiddenc");
+      type_a_genre.classList.remove("visible");
+    }
+    if (custom) {
+      custom.classList.add("hiddenc");
+      custom.classList.remove("visible");
+    }
 
-    if (wallpaper_id.value === "typeagenre") {
+    if (wallpaper_id.value === "typeagenre" && type_a_genre) {
       type_a_genre.classList.remove("hiddenc");
       type_a_genre.classList.add("visible");
-    } else if (wallpaper_id.value === "custom") {
+    } else if (wallpaper_id.value === "custom" && custom) {
       custom.classList.remove("hiddenc");
       custom.classList.add("visible");
     }
   });
 
-  quote_id?.addEventListener("change", () => {
-    quote_input.classList.add("hiddenc");
-    quote_input.classList.remove("visible");
+  if (quote_id && quote_input) {
+    quote_id.addEventListener("change", () => {
+      quote_input.classList.add("hiddenc");
+      quote_input.classList.remove("visible");
 
-    if (quote_id.value === "Custom") {
-      quote_input.classList.remove("hiddenc");
-      quote_input.classList.add("visible");
-    }
-  });
+      if (quote_id.value === "Custom") {
+        quote_input.classList.remove("hiddenc");
+        quote_input.classList.add("visible");
+      }
+    });
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     if (wallpaper_id.value === "select") {
-      alert("Please select a wallpaper type!, LOL");
+      alert("Please select a wallpaper type!");
       return;
     }
 
@@ -67,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
           break;
         case "Nature":
           searchQuery = "nature";
-          break; 
+          break;
         case "Anime":
           searchQuery = "anime";
           break;
@@ -81,26 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
         default:
           searchQuery = "anime";
       }
-    
+
       if (typeofwall !== "custom") {
         const url = `https://wallhaven.cc/api/v1/search?q=${searchQuery}&categories=111&purity=100&sorting=random&resolutions=1920x1080&ratios=16x9`;
-      
-        
 
         const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
-
-        if (!data.data || data.data.length === 0) {
-          throw new Error("No wallpapers found in API response");
-        }
+        if (!data.data || data.data.length === 0) throw new Error("No wallpapers found in API response");
 
         const imgurl = data.data[0].path;
-        
 
         const settings = {
           wallpaperType: typeofwall,
@@ -122,9 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
           }
 
-          
           alert("Settings saved successfully!");
-
           chrome.tabs.create({ url: 'chrome://newtab' });
         });
       }
@@ -137,8 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadSavedSettings();
 });
-
-async function loadSavedSettings() {
+function loadSavedSettings() {
   try {
     chrome.storage.local.get([
       'wallpaperType',
@@ -166,7 +156,26 @@ async function loadSavedSettings() {
         if (genreInput) genreInput.value = result.customGenre;
       }
 
+      const quoteSelect = document.getElementById("quote-options");
+      if (quoteSelect && result.quoteType) {
+        quoteSelect.value = result.quoteType;
+        quoteSelect.dispatchEvent(new Event('change'));
+      }
 
+      const quoteInput = document.getElementById("quote_input");
+      if (quoteInput && result.customQuote) {
+        quoteInput.value = result.customQuote;
+      }
+
+      const weatherInput = document.getElementById("weather_input");
+      if (weatherInput && result.weatherCity) {
+        weatherInput.value = result.weatherCity;
+      }
+
+      const greetingsCheck = document.getElementById("timebased_greetings");
+      if (greetingsCheck) {
+        greetingsCheck.checked = !!result.timeBasedGreetings;
+      }
     });
 
   } catch (error) {
