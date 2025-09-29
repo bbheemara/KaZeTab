@@ -6,20 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Settings</title>
   <link rel="stylesheet" href="./css/settings.css">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+
 </head>
 
 <body class="bg-dark" style="display: flex; align-items: center; justify-content:center; height: 100vh; width: 100vw;">
-  <div class="border-1" id="inner-body">
-    <h1 class="text-white justify-content-center d-flex mt-2" style="display: flex; justify-content: center;">Settings
+  <div class="border border-white p-3 rounded" id="inner-body" >
+    <h1 class="text-white mb-4" style="display: flex; justify-content: center;">Settings
     </h1>
-    <div id="Wallpaper" class="justify-content-center d-flex mt-4">
+    <div id="Wallpaper">
       <form id="settings-form">
-        <div class="row mb-4 align-items-center">
-          <div class="col" style="display: flex; justify-content: center; font-size: medium; margin-top: 10px;">
-            <label for="Wallpaper-options" style="display: flex; justify-content: center; margin-right: 2px;">
+        <div >
+          <div  style="display: flex; justify-content: center; font-size: medium; margin-top: 10px;">
+            <label for="Wallpaper-options" class="text-white" style="display: flex; justify-content: center; margin-right: 2px;">
               Select the Wallpaper type:
             </label>
-            <select required id="Wallpaper-options" class="form-select" style="margin-left: 3px;">
+           
+            <select required id="Wallpaper-options" style="margin-left: 3px;">
               <option selected hidden disabled value="select">Select</option>
               <option value="tech">Tech</option>
               <option value="Nature">Nature</option>
@@ -31,9 +34,9 @@
           </div>
         </div>
 
-        <div id="typeagenre" class="hiddenc" style="justify-content: center; align-items: center; margin-top: 10px;">
-          <label for="genre-input" style="font-size: medium;">Type a genre:</label>
-          <input type="text" id="genre-input">
+        <div id="typeagenre" class="hiddenc mt-3" style="justify-content: center; align-items: center; margin-top: 10px;">
+          <label class="text-white " for="genre-input" style="font-size: medium;">Type a genre:</label>
+          <input type="text" id="genre-input" class=" ms-2">
         </div>
 
         <!-- <div id="custom" class="hiddenc" style="justify-content: center; align-items: center; margin-top: 10px;">
@@ -65,12 +68,17 @@
         </div> -->
 
         <!-- <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px; font-size: medium;">
-          <input type="checkbox" id="timebased_greetings">
+          <input type="checkbox" id="timebased_greetings" role="switch">
           <label for="timebased_greetings">Time Based Greetings</label>
         </div> -->
 
-        <div style="display:flex; justify-content: center; align-items: center; margin: 10px; font-size: medium;">
-          <button type="submit">Submit</button>
+        <div class="form-check form-switch d-flex justify-content-center align-items-center text-white mt-3">
+  <input class="form-check-input" type="checkbox" role="switch" id="timebased_greetings">
+  <label class="form-check-label ms-2" for="timebased_greetings">Time Based Greetings</label>
+</div>
+
+        <div style="display:flex; justify-content: center; align-items: center; margin: 10px; font-size: medium;" class="mt-3">
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>

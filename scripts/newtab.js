@@ -16,9 +16,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Error loading settings:', error);
     }
-
+    
     const searchForm = document.getElementById('searchForm');
     const searchBox = document.getElementById('searchBox');
+    
+   chrome.storage.local.get(['timeBasedGreetings'], (result) => {
+    const timebased = !!result.timeBasedGreetings;
+    if (timebased){
+        const time = new Date();
+        const h = time.getHours();
+        const greetings = h < 12 ? 'Morning Champ!' : h < 18 ? 'Afternoon!' : h <= 22? 'Evening' : 'Night, Go Sleep!'
+        greeting_display = document.getElementById('greeting-text')
+        greeting_display.textContent = greetings
+    }
+   });
+   
+
 
     if (searchForm && searchBox) {
         searchForm.addEventListener('submit', (e) => {
