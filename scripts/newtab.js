@@ -1,53 +1,126 @@
-document.addEventListener('DOMContentLoaded', async () => {
+function getStorage(keys) {
+  return new Promise((resolve) => {
     try {
-        const result = await chrome.storage.local.get([
-            'wallpaperUrl',
-            'quoteType',
-            'customQuote',
-            'timeBasedGreetings'
-        ]);
+      chrome.storage.local.get(keys, (res) => resolve(res || {}));
+    } catch (e) {
+      resolve({});
+    }
+  });
+}
 
-        if (result.wallpaperUrl) {
-            document.body.style.backgroundImage = `url(${result.wallpaperUrl})`;
-            document.body.style.backgroundSize = 'cover';
-            document.body.style.backgroundPosition = 'center';
-            document.body.style.backgroundRepeat = 'no-repeat';
-        }
-    } catch (error) {
-        console.error('Error loading settings:', error);
+function setWallpaperUrl(url) {
+  if (!url) return;
+  const container = document.getElementById('wallpaper') || document.body;
+  container.style.backgroundImage = `url("${url}")`;
+  container.style.backgroundSize = 'cover';
+  container.style.backgroundPosition = 'center';
+  container.style.backgroundRepeat = 'no-repeat';
+}
+
+function getSlotForHour(h) {
+  if (h < 12) return 'morning';
+  if (h < 18) return 'afternoon';
+  if (h < 21) return 'evening';
+  return 'night';
+}
+
+async function loadWallpaperOnStart() {
+  const res = await getStorage(['wallpaperUrl', 'timeBasedGreetings', 'timeSlotCategories', 'mode']);
+  const h = new Date().getHours();
+  const slot = getSlotForHour(h);
+
+  if (res.timeSlotCategories) {
+    const key = `wallpaper_${slot}`;
+    const slotRes = await getStorage([key]);
+    if (slotRes && slotRes[key]) {
+      setWallpaperUrl(slotRes[key]);
+      return;
     }
+
     
-    const searchForm = document.getElementById('searchForm');
-    const searchBox = document.getElementById('searchBox');
-    
-   chrome.storage.local.get(['timeBasedGreetings'], (result) => {
-    const timebased = !!result.timeBasedGreetings;
-    if (timebased){
-        const time = new Date();
-        const h = time.getHours();
-        const greetings = h < 12 ? 'Morning Champ!' : h < 18 ? 'Afternoon!' : h <= 22? 'Evening' : 'Night, Go Sleep!'
-        greeting_display = document.getElementById('greeting-text')
-        greeting_display.textContent = greetings
+    if (res.wallpaperUrl) {
+      setWallpaperUrl(res.wallpaperUrl);
+      return;
     }
-   });
+
    
+    return;
+  }
 
 
-    if (searchForm && searchBox) {
-        searchForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const query = searchBox.value.trim();
-            if (!query) return;
+  if (res.wallpaperUrl) {
+    setWallpaperUrl(res.wallpaperUrl);
+    return;
+  }
 
-            try {
-                if (window.chrome && chrome.search && typeof chrome.search.query === 'function') {
-                    chrome.search.query({ text: query });
-                } else {
-                    window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
-                }
-            } catch (err) {
-                window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
-            }
-        });
-    }
+}
+
+
+function showGreetingIfNeeded() {
+  chrome.storage.local.get(['timeBasedGreetings'], (result) => {
+    const timebased = !!result.timeBasedGreetings;
+    if (!timebased) return;
+
+    const time = new Date();
+    const h = time.getHours();
+    const greetings = h < 12
+      ? 'Morning Champ!'
+      : h < 18
+        ? 'Afternoon!'
+        : h <= 22
+          ? 'Evening'
+          : 'Night, Go Sleep!';
+
+    const greetingDisplay = document.getElementById('greeting-text');
+    if (greetingDisplay) greetingDisplay.textContent = greetings;
+  });
+}
+
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (!msg || typeof msg !== 'object') return;
+  if (msg.type === 'wallpaper-updated' && msg.url) {
+  
+    setWallpaperUrl(msg.url);
+  }
+
+  if (msg.type === 'mode-changed') {
+    loadWallpaperOnStart();
+  }
+});
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await loadWallpaperOnStart();
+  } catch (err) {
+    console.error('Error while loading wallpaper on start:', err);
+  }
+
+  try {
+    showGreetingIfNeeded();
+  } catch (e) {
+    console.error('Greeting error', e);
+  }
+
+  
+  const searchForm = document.getElementById('searchForm');
+  const searchBox = document.getElementById('searchBox');
+
+  if (searchForm && searchBox) {
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = searchBox.value.trim();
+      if (!query) return;
+      try {
+        if (window.chrome && chrome.search && typeof chrome.search.query === 'function') {
+          chrome.search.query({ text: query });
+        } else {
+          window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+        }
+      } catch (err) {
+        window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+      }
+    });
+  }
 });

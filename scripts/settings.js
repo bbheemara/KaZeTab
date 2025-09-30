@@ -8,6 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const mode_same = document.getElementById("mode-same");
   const mode_diff = document.getElementById("mode-different");
   const custom_form = document.getElementById("custom-settings-form")
+  const wallpaper_id_morning = document.getElementById("Wallpaper-options-morning")
+  const wallpaper_id_afternoon = document.getElementById("Wallpaper-options-afternoon")
+  const wallpaper_id_evening = document.getElementById("Wallpaper-options-evening")
+  const wallpaper_id_night = document.getElementById("Wallpaper-options-night")
+
+  const type_a_genre_morning = document.getElementById("typeagenre_morning")
+  const type_a_genre_afternoon = document.getElementById("typeagenre_afternoon")
+  const type_a_genre_evening = document.getElementById("typeagenre_evening")
+  const type_a_genre_night = document.getElementById("typeagenre_night")
+
+
 
   function showForm_normal() {
     if (!form) return;
@@ -19,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.classList.remove('visible');
     form.classList.add('hiddenc');
   }
- function showForm_custom() {
+  function showForm_custom() {
     if (!custom_form) return;
     custom_form.classList.remove('hiddenc');
     custom_form.classList.add('visible');
@@ -47,22 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
- 
 
-  // if (mode_same) {
-  //   mode_same.addEventListener("click", () => {
-  //     showForm_custom();
-  //     mode_same.classList.add('active');
-  //     if (mode_diff) mode_diff.classList.remove('active');
-  //   });
-  // }
-  // if (mode_diff) {
-  //   mode_diff.addEventListener("click", () => {
-  //     hideForm_custom();
-  //     if (mode_diff) mode_diff.classList.add('active');
-  //     if (mode_same) mode_same.classList.remove('active');
-  //   });
-  // }
 
   if (typeof chrome === 'undefined' || !chrome.storage) {
     console.error("Chrome extension APIs not available");
@@ -108,6 +104,112 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  if (!wallpaper_id_morning || !custom_form) {
+    console.error("Required elements not found");
+    return;
+  }
+
+  wallpaper_id_morning.addEventListener("change", () => {
+    if (type_a_genre_morning) {
+      type_a_genre_morning.classList.add("hiddenc");
+      type_a_genre_morning.classList.remove("visible");
+    }
+    if (wallpaper_id_morning.value === "typeagenre_morning" && type_a_genre_morning) {
+      type_a_genre_morning.classList.remove("hiddenc");
+      type_a_genre_morning.classList.add("visible");
+    }
+  });
+
+  wallpaper_id_afternoon.addEventListener("change", () => {
+    if (type_a_genre_afternoon) {
+      type_a_genre_afternoon.classList.add("hiddenc");
+      type_a_genre_afternoon.classList.remove("visible");
+    }
+    if (wallpaper_id_afternoon.value === "typeagenre_afternoon" && type_a_genre_afternoon) {
+      type_a_genre_afternoon.classList.remove("hiddenc");
+      type_a_genre_afternoon.classList.add("visible");
+    }
+  });
+
+  wallpaper_id_evening.addEventListener("change", () => {
+    if (type_a_genre_evening) {
+      type_a_genre_evening.classList.add("hiddenc");
+      type_a_genre_evening.classList.remove("visible");
+    }
+    if (wallpaper_id_evening.value === "typeagenre_evening" && type_a_genre_evening) {
+      type_a_genre_evening.classList.remove("hiddenc");
+      type_a_genre_evening.classList.add("visible");
+    }
+  });
+
+  wallpaper_id_night.addEventListener("change", () => {
+    if (type_a_genre_night) {
+      type_a_genre_night.classList.add("hiddenc");
+      type_a_genre_night.classList.remove("visible");
+    }
+    if (wallpaper_id_night.value === "typeagenre_night" && type_a_genre_night) {
+      type_a_genre_night.classList.remove("hiddenc");
+      type_a_genre_night.classList.add("visible");
+    }
+  });
+
+
+  if (custom_form) {
+
+    custom_form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const morningVal = document.getElementById('Wallpaper-options-morning')?.value || '';
+      const afternoonVal = document.getElementById('Wallpaper-options-afternoon')?.value || '';
+      const eveningVal = document.getElementById('Wallpaper-options-evening')?.value || '';
+      const nightVal = document.getElementById('Wallpaper-options-night')?.value || '';
+
+      function readGenreIfNeeded(selectValue, inputId) {
+        if (selectValue === 'typeagenre') {
+          return document.getElementById(inputId)?.value?.trim() || '';
+        }
+        return '';
+      }
+
+      const customGenres = {
+        morning: readGenreIfNeeded(morningVal, 'genre-input-morning'),
+        afternoon: readGenreIfNeeded(afternoonVal, 'genre-input-afternoon'),
+        evening: readGenreIfNeeded(eveningVal, 'genre-input-evening'),
+        night: readGenreIfNeeded(nightVal, 'genre-input-night')
+      };
+
+      const timeSlotCategories = {
+        morning: customGenres.morning ? customGenres.morning : morningVal,
+        afternoon: customGenres.afternoon ? customGenres.afternoon : afternoonVal,
+        evening: customGenres.evening ? customGenres.evening : eveningVal,
+        night: customGenres.night ? customGenres.night : nightVal
+      };
+
+      chrome.storage.local.set({ timeSlotCategories, customGenres }, () => {
+        if (chrome.runtime.lastError) {
+          console.error('Save failed', chrome.runtime.lastError);
+          alert('Failed to save settings');
+          return;
+        }
+        alert('Time-slot settings saved and wallpaper set! reload the new tab');
+
+        try {
+          chrome.runtime.sendMessage({ type: 'timeSlotsUpdated' });
+        }
+        catch (e) {
+        }
+      });
+    });
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -122,8 +224,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let searchQuery = "";
 
       switch (typeofwall) {
-        case "tech":
-          searchQuery = "tech";
+        case "Coding":
+          searchQuery = "coding";
           break;
         case "Nature":
           searchQuery = "nature";
@@ -131,8 +233,8 @@ document.addEventListener('DOMContentLoaded', () => {
         case "Anime":
           searchQuery = "anime";
           break;
-        case "Movie":
-          searchQuery = "movie";
+        case "Space":
+          searchQuery = "space";
           break;
         case "typeagenre":
           const genreInput = document.getElementById("genre-input");
@@ -185,6 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   loadSavedSettings();
+
+
+
 });
 function loadSavedSettings() {
   try {
