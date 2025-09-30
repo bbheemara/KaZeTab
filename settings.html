@@ -15,7 +15,20 @@
     <h1 class="text-white mb-4" style="display: flex; justify-content: center;">Settings
     </h1>
     <div id="Wallpaper">
-      <form id="settings-form">
+    <div class="mode-select text-white mb-3 d-flex flex-column align-items-start" style="gap:8px;">
+  <div>
+    <small class="text-muted d-block mt-2 mb-2" style="color: white !important;">
+      Choose whether wallpapers Genre change by time-of-day or remain the same.
+    </small>
+  </div>
+
+  <div>
+    <button id="mode-different" type="button" class="btn btn-outline-light me-5 ms-3">Different by time</button>
+    <button id="mode-same" type="button" class="btn btn-outline-light ms-5">Same for all times</button>
+  </div>
+</div>
+
+      <form id="settings-form" class="hiddenc">
         <div >
           <div  style="display: flex; justify-content: center; font-size: medium; margin-top: 10px;">
             <label for="Wallpaper-options" class="text-white" style="display: flex; justify-content: center; margin-right: 2px;">
@@ -35,7 +48,7 @@
         </div>
 
         <div id="typeagenre" class="hiddenc mt-3" style="justify-content: center; align-items: center; margin-top: 10px;">
-          <label class="text-white " for="genre-input" style="font-size: medium;">Type a genre:</label>
+          <label class="text-white " for="genre-input" style="font-size: medium; ">Type a genre:</label>
           <input type="text" id="genre-input" class=" ms-2">
         </div>
 
@@ -80,7 +93,7 @@
         <div style="display:flex; justify-content: center; align-items: center; margin: 10px; font-size: medium;" class="mt-3">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-      </form>
+      </form >
     </div>
   </div>
   <script src="scripts/settings.js" defer></script>

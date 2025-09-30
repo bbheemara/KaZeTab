@@ -18,5 +18,13 @@ body{
 }
 
 .visible {
-    display: flex !important;
+    display: block !important;
+}
+
+#typeagenre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-left: 70px;
 }

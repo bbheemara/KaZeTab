@@ -5,6 +5,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const quote_id = document.getElementById("quote-options");
   const quote_input = document.getElementById("quote_custom_div");
   const form = document.getElementById("settings-form");
+  const mode_same = document.getElementById("mode-same");
+  const mode_diff = document.getElementById("mode-different");
+
+  function showForm() {
+    if (!form) return;
+    form.classList.remove('hiddenc');
+    form.classList.add('visible');
+  }
+  function hideForm() {
+    if (!form) return;
+    form.classList.remove('visible');
+    form.classList.add('hiddenc');
+  }
+
+  if (mode_same) {
+    mode_same.addEventListener("click", () => {
+      showForm();
+      mode_same.classList.add('active');
+      if (mode_diff) mode_diff.classList.remove('active');
+    });
+  }
+  if (mode_diff) {
+    mode_diff.addEventListener("click", () => {
+      hideForm();
+      if (mode_diff) mode_diff.classList.add('active');
+      if (mode_same) mode_same.classList.remove('active');
+    });
+  }
+  
 
   if (typeof chrome === 'undefined' || !chrome.storage) {
     console.error("Chrome extension APIs not available");
@@ -12,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
- 
+
   // took help from ai to reframe some parts like chrome.storage and for debugging parts as am mid in js:( 
   if (!wallpaper_id || !form) {
     console.error("Required elements not found");
