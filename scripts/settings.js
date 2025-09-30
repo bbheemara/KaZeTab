@@ -7,33 +7,62 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById("settings-form");
   const mode_same = document.getElementById("mode-same");
   const mode_diff = document.getElementById("mode-different");
+  const custom_form = document.getElementById("custom-settings-form")
 
-  function showForm() {
+  function showForm_normal() {
     if (!form) return;
     form.classList.remove('hiddenc');
     form.classList.add('visible');
   }
-  function hideForm() {
+  function hideForm_normal() {
     if (!form) return;
     form.classList.remove('visible');
     form.classList.add('hiddenc');
   }
+ function showForm_custom() {
+    if (!custom_form) return;
+    custom_form.classList.remove('hiddenc');
+    custom_form.classList.add('visible');
+  }
+  function hideForm_custom() {
+    if (!custom_form) return;
+    custom_form.classList.remove('visible');
+    custom_form.classList.add('hiddenc');
+  }
 
   if (mode_same) {
     mode_same.addEventListener("click", () => {
-      showForm();
+      hideForm_custom();
+      showForm_normal();
       mode_same.classList.add('active');
       if (mode_diff) mode_diff.classList.remove('active');
     });
   }
   if (mode_diff) {
     mode_diff.addEventListener("click", () => {
-      hideForm();
+      hideForm_normal();
+      showForm_custom();
       if (mode_diff) mode_diff.classList.add('active');
       if (mode_same) mode_same.classList.remove('active');
     });
   }
-  
+
+ 
+
+  // if (mode_same) {
+  //   mode_same.addEventListener("click", () => {
+  //     showForm_custom();
+  //     mode_same.classList.add('active');
+  //     if (mode_diff) mode_diff.classList.remove('active');
+  //   });
+  // }
+  // if (mode_diff) {
+  //   mode_diff.addEventListener("click", () => {
+  //     hideForm_custom();
+  //     if (mode_diff) mode_diff.classList.add('active');
+  //     if (mode_same) mode_same.classList.remove('active');
+  //   });
+  // }
 
   if (typeof chrome === 'undefined' || !chrome.storage) {
     console.error("Chrome extension APIs not available");

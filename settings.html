@@ -20,7 +20,7 @@
     <small class="text-muted d-block mt-2 mb-2" style="color: white !important;">
       Choose whether wallpapers Genre change by time-of-day or remain the same.
     </small>
-  </div>
+  </div> 
 
   <div>
     <button id="mode-different" type="button" class="btn btn-outline-light me-5 ms-3">Different by time</button>
@@ -94,6 +94,31 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form >
+
+      <form id="custom-settings-form" class="hiddenc">
+         <div >
+          <div  style="display: flex; justify-content: center; font-size: medium; margin-top: 10px;">
+            <label for="Wallpaper-options-morning" class="text-white" style="display: flex; justify-content: center; margin-right: 2px;">
+              Type of wallpaper in Morning:
+            </label>
+           
+            <select required id="Wallpaper-options" style="margin-left: 3px;">
+              <option selected hidden disabled value="select">Select</option>
+              <option value="tech">Tech</option>
+              <option value="Nature">Nature</option>
+              <option value="Anime">Anime</option>
+              <option value="Movie">Movie</option>
+              <option value="typeagenre">Type a Genre</option>
+              <!-- <option value="custom">Custom</option> -->
+            </select>
+          </div>
+          
+
+        </div>
+  </form>
+
+
+
     </div>
   </div>
   <script src="scripts/settings.js" defer></script>
