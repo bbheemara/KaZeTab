@@ -7,7 +7,7 @@
     "storage",
     "search",
     "alarms",
-    "tabs"
+    "tabs"    
   ],
   "host_permissions": [
     "https://wallhaven.cc/*"

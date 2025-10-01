@@ -20,7 +20,7 @@ function setWallpaperUrl(url) {
 function getSlotForHour(h) {
   if (h < 12) return 'morning';
   if (h < 18) return 'afternoon';
-  if (h < 21) return 'evening';
+  if (h < 22) return 'evening';
   return 'night';
 }
 

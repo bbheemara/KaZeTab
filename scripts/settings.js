@@ -190,9 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
           alert('Failed to save settings');
           return;
         }
-        alert('Wallpaper Set! enjoy..');
-        chrome.tabs.create({ url: 'chrome://newtab' });
-
+        alert('Wallpaper Set! Reload the new tab to see. enjoy:)..');
+        
         try {
           chrome.runtime.sendMessage({ type: 'timeSlotsUpdated' });
         }
