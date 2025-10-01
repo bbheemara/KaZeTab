@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const type_a_genre_night = document.getElementById("typeagenre_night")
 
 
-
   function showForm_normal() {
     if (!form) return;
     form.classList.remove('hiddenc');
@@ -165,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const nightVal = document.getElementById('Wallpaper-options-night')?.value || '';
 
       function readGenreIfNeeded(selectValue, inputId) {
-         if (String(selectValue).includes('typeagenre')) {
+        if (String(selectValue).includes('typeagenre')) {
           return document.getElementById(inputId)?.value?.trim() || '';
         }
         return '';
@@ -191,7 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
           alert('Failed to save settings');
           return;
         }
-        alert('Time-slot settings saved and wallpaper set! reload the new tab');
+        alert('Wallpaper Set! enjoy..');
+        chrome.tabs.create({ url: 'chrome://newtab' });
 
         try {
           chrome.runtime.sendMessage({ type: 'timeSlotsUpdated' });
@@ -204,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 
@@ -224,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let searchQuery = "";
 
       switch (typeofwall) {
-        case "Coding":
+        case "coding":
           searchQuery = "coding";
           break;
         case "Nature":
@@ -245,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (typeofwall !== "custom") {
-        const url = `https://wallhaven.cc/api/v1/search?q=${searchQuery}&categories=111&purity=100&sorting=random&resolutions=1920x1080&ratios=16x9`;
+        const url = `https://wallhaven.cc/api/v1/search?q=${encodeURIComponent(searchQuery)}&categories=111&purity=100&sorting=random&resolutions=1920x1080&ratios=16x9`;
 
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -267,18 +266,67 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeofwall === "typeagenre") {
           settings.customGenre = document.getElementById("genre-input")?.value || "";
         }
-        settings.mode = 'same';
+             
+        const timebasedWallpaperToggle = !!document.getElementById('timebased_wallpaper')?.checked;  
 
-        chrome.storage.local.set(settings, () => {
-          if (chrome.runtime.lastError) {
-            console.error("Error saving to storage:", chrome.runtime.lastError);
-            alert("Error saving settings. Please try again.");
-            return;
+        function getTypedGenreIfNeeded(selectValue, inputId) {
+          if (selectValue === 'typeagenre') {
+            return document.getElementById(inputId)?.value?.trim() || 'anime';
           }
+          return selectValue;
+        }
 
-          alert("Settings saved successfully!");
-          chrome.tabs.create({ url: 'chrome://newtab' });
-        });
+        if (timebasedWallpaperToggle) {
+          const slotCategory = getTypedGenreIfNeeded(typeofwall, 'genre-input');
+
+          const timeSlotCategories = {
+            morning: slotCategory,
+            afternoon: slotCategory,
+            evening: slotCategory,
+            night: slotCategory
+          };
+
+          const customGenres = {
+            morning: (typeofwall === 'typeagenre') ? (document.getElementById('genre-input')?.value?.trim() || '') : '',
+            afternoon: (typeofwall === 'typeagenre') ? (document.getElementById('genre-input')?.value?.trim() || '') : '',
+            evening: (typeofwall === 'typeagenre') ? (document.getElementById('genre-input')?.value?.trim() || '') : '',
+            night: (typeofwall === 'typeagenre') ? (document.getElementById('genre-input')?.value?.trim() || '') : ''
+          };
+
+          const toSave = Object.assign({}, settings, {
+            mode: 'different',
+            timeSlotCategories,
+            customGenres,
+            wallpaperType: typeofwall,
+            customGenre: (typeofwall === 'typeagenre') ? (document.getElementById('genre-input')?.value?.trim() || '') : '',
+            timeBasedWallpaper: true
+          });
+
+          chrome.storage.local.set(toSave, () => {
+            if (chrome.runtime.lastError) {
+              console.error('Error saving settings:', chrome.runtime.lastError);
+              alert('Error saving settings. Please try again.');
+              return;
+            }
+            try { chrome.runtime.sendMessage({ type: 'timeSlotsUpdated' }); } catch (e) { }
+            alert('Wallpaper Set! enjoy..');
+            chrome.tabs.create({ url: 'chrome://newtab' });
+          });
+
+        } else {
+          settings.mode = 'same';
+          settings.timeBasedWallpaper = false; 
+
+          chrome.storage.local.set(settings, () => {
+            if (chrome.runtime.lastError) {
+              console.error("Error saving to storage:", chrome.runtime.lastError);
+              alert("Error saving settings. Please try again.");
+              return;
+            }
+            alert('Wallpaper Set! enjoy..');
+            chrome.tabs.create({ url: 'chrome://newtab' });
+          });
+        }  
       }
 
     } catch (error) {
@@ -300,7 +348,8 @@ function loadSavedSettings() {
       'quoteType',
       'customQuote',
       'weatherCity',
-      'timeBasedGreetings'
+      'timeBasedGreetings',
+      'timeBasedWallpaper' 
     ], (result) => {
       if (chrome.runtime.lastError) {
         console.error("Error loading settings:", chrome.runtime.lastError);
@@ -339,6 +388,11 @@ function loadSavedSettings() {
       const greetingsCheck = document.getElementById("timebased_greetings");
       if (greetingsCheck) {
         greetingsCheck.checked = !!result.timeBasedGreetings;
+      }
+
+      const wallpaperToggle = document.getElementById("timebased_wallpaper");
+      if (wallpaperToggle) {
+        wallpaperToggle.checked = !!result.timeBasedWallpaper;
       }
     });
 

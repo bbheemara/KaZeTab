@@ -27,6 +27,10 @@ function getSlotForHour(h) {
 async function loadWallpaperOnStart() {
   const res = await getStorage(['wallpaperUrl', 'timeBasedGreetings', 'timeSlotCategories', 'mode']);
   const h = new Date().getHours();
+  // the below lines are for testing purpose of wallpaper set from settings-form
+// const urlParams = new URLSearchParams(window.location.search); 
+// const debugHour = urlParams.has('hour') ? Number(urlParams.get('hour')) : null;
+// const h = (debugHour !== null && !isNaN(debugHour)) ? debugHour : new Date().getHours();
   const slot = getSlotForHour(h);
 
   if (res.mode === 'different' && res.timeSlotCategories) {
@@ -77,7 +81,7 @@ function showGreetingIfNeeded() {
 }
 
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((msg) => {
   if (!msg || typeof msg !== 'object') return;
   if (msg.type === 'wallpaper-updated' && msg.url) {
   
@@ -85,7 +89,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   }
 
   if (msg.type === 'mode-changed') {
-    loadWallpaperOnStart();
+    loadWallpaperOnStart(); 
   }
 });
 
