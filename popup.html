@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KaZeTab</title>
     <link rel="stylesheet" href="./css/popup.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 
 <body class="bg-dark">
-    <div id="svg">
-        <button id="open-settings">Settings
+    <div id="svg"> 
+        <button id="open-settings" class="btn btn-outline-light">Settings
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" fill="currentColor" class="bi bi-gear"
                 viewBox="0 0 16 16">
                 <path
@@ -27,7 +28,8 @@
     </div>
 
     <div style="display: flex; justify-content: center; align-items: center;">
-        <form id="settings-form"><button type="submit" id="change-wallpaper">Change Wallpaper</button></form>
+        <form id="settings-form"><button style=" font-family: 'AnimeFont', sans-serif;
+" class="btn btn-light" type="submit" id="change-wallpaper">Change Wallpaper</button></form>
     </div>
 
     <script src="scripts/popup.js" defer></script>

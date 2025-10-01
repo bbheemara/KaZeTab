@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const nightVal = document.getElementById('Wallpaper-options-night')?.value || '';
 
       function readGenreIfNeeded(selectValue, inputId) {
-        if (selectValue === 'typeagenre') {
+         if (String(selectValue).includes('typeagenre')) {
           return document.getElementById(inputId)?.value?.trim() || '';
         }
         return '';
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         night: customGenres.night ? customGenres.night : nightVal
       };
 
-      chrome.storage.local.set({ timeSlotCategories, customGenres }, () => {
+      chrome.storage.local.set({ timeSlotCategories, customGenres, mode: 'different' }, () => {
         if (chrome.runtime.lastError) {
           console.error('Save failed', chrome.runtime.lastError);
           alert('Failed to save settings');
@@ -267,6 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeofwall === "typeagenre") {
           settings.customGenre = document.getElementById("genre-input")?.value || "";
         }
+        settings.mode = 'same';
 
         chrome.storage.local.set(settings, () => {
           if (chrome.runtime.lastError) {

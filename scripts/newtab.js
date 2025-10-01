@@ -29,7 +29,7 @@ async function loadWallpaperOnStart() {
   const h = new Date().getHours();
   const slot = getSlotForHour(h);
 
-  if (res.timeSlotCategories) {
+  if (res.mode === 'different' && res.timeSlotCategories) {
     const key = `wallpaper_${slot}`;
     const slotRes = await getStorage([key]);
     if (slotRes && slotRes[key]) {

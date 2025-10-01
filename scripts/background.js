@@ -20,6 +20,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 
     const img = await fetchWallpaperCategory(category);
     if (!img) {
+      
       console.warn('No image found for', category);
       return;
     }
