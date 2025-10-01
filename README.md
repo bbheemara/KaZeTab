@@ -22,3 +22,10 @@ on popup page
 - Separate Settings page for all options mentioned to customize
 
 ## How to use
+-  Download **KaZe.zip** from [here](https://github.com/bbheemara/KaZeTab/releases/tag/1.0.1).
+-  Extract the zip file.
+-  Open Chrome and go to `chrome://extensions/`.
+-  Turn **Developer mode** on (top right corner).
+-  Click **Load unpacked** (top left corner).
+-  Select the extracted **KaZe** folder.
+-  Open the extension settings and change the background with whatever wallpaper you want!
