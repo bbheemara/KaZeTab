@@ -1,0 +1,2 @@
+A browser extension that lets users customize their New Tab background with any type of wallpaper they like. This supports both a single wallpaper category (e.g., anime, coding, nature) or time-based categories for example, nature in the morning, coding in the afternoon, and something relaxing at night. The extension also includes optional time-based greetings for a more personalized experience.
+If user don't like any of the wallpaper options just choose type a genre then type and get wallpaper!
