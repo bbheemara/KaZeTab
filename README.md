@@ -28,4 +28,7 @@ on popup page
 -  Turn **Developer mode** on (top right corner).
 -  Click **Load unpacked** (top left corner).
 -  Select the extracted **KaZe** folder.
--  Open the extension settings and change the background with whatever wallpaper you want!
+-  Open the extension popup from top right corner like this:
+<img width="452" height="369" alt="Screenshot 2025-10-02 111428" src="https://github.com/user-attachments/assets/ac60a1d0-f5ff-4c7e-99c2-6678299a7369" />
+
+- click on settings this will open settings page and change the background with whatever wallpaper you want!
