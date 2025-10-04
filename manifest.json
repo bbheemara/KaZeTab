@@ -1,13 +1,15 @@
 {
   "name": "KaZeTab",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "manifest_version": 3,
-  "description": "Changes new tab with type of wallpaper you want with beatifull search section to search",
+  "description": "Changes new tab with type of wallpaper you want automatically based on time of the day, with beatifull search section to search",
   "permissions": [
     "storage",
     "search",
     "alarms",
-    "tabs"    
+    "tabs",
+    "bookmarks"
+    
   ],
   "host_permissions": [
     "https://wallhaven.cc/*"

@@ -9,6 +9,7 @@ KaZeTab is a browser extension that changes your Chrome's New Tab  with type of 
 - Choose your favorite wallpaper with wide ranges of genres or type a genre.
 - Auto wallpapers change throughout the day if you want(e.g. Nature in morning, coding in afternoon,...)
 - Time based greetings (optional!)
+- Get Bookmarks if you want (optional)
 - Lets you set any wallpaper from the internet(api) you want as your new tab background 
 
 - Change wallpaper easily and manually by clicking **change wallpaper** button

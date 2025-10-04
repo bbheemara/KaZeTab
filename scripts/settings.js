@@ -18,6 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const type_a_genre_evening = document.getElementById("typeagenre_evening")
   const type_a_genre_night = document.getElementById("typeagenre_night")
 
+  const showBookmarksSwitch   = document.getElementById("Show_Bookmakrs")
+
+
+  chrome.storage.local.get(['showBookmarks'], (res) => {
+    if (res && typeof res.showBookmarks !== 'undefined') {
+      showBookmarksSwitch.checked = !!res.showBookmarks;
+    }
+  });
+  
+  showBookmarksSwitch.addEventListener('change', () => {
+    chrome.storage.local.set({ showBookmarks: showBookmarksSwitch.checked });
+  });
+
+
+
 
   function showForm_normal() {
     if (!form) return;
@@ -191,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
         alert('Wallpaper Set! Reload the new tab to see. enjoy:)..');
-        
+
         try {
           chrome.runtime.sendMessage({ type: 'timeSlotsUpdated' });
         }
@@ -265,8 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeofwall === "typeagenre") {
           settings.customGenre = document.getElementById("genre-input")?.value || "";
         }
-             
-        const timebasedWallpaperToggle = !!document.getElementById('timebased_wallpaper')?.checked;  
+
+        const timebasedWallpaperToggle = !!document.getElementById('timebased_wallpaper')?.checked;
 
         function getTypedGenreIfNeeded(selectValue, inputId) {
           if (selectValue === 'typeagenre') {
@@ -314,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } else {
           settings.mode = 'same';
-          settings.timeBasedWallpaper = false; 
+          settings.timeBasedWallpaper = false;
 
           chrome.storage.local.set(settings, () => {
             if (chrome.runtime.lastError) {
@@ -325,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Wallpaper Set! enjoy..');
             chrome.tabs.create({ url: 'chrome://newtab' });
           });
-        }  
+        }
       }
 
     } catch (error) {
@@ -348,7 +363,7 @@ function loadSavedSettings() {
       'customQuote',
       'weatherCity',
       'timeBasedGreetings',
-      'timeBasedWallpaper' 
+      'timeBasedWallpaper'
     ], (result) => {
       if (chrome.runtime.lastError) {
         console.error("Error loading settings:", chrome.runtime.lastError);
