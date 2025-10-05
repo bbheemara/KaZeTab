@@ -2,7 +2,7 @@
 KaZeTab is a browser extension that changes your Chrome's New Tab  with type of wallpaper you want with cool features!
 
  
-![alt text](<Screenshot 2025-10-01 051825.png>)
+<img width="1918" height="915" alt="Screenshot 2025-10-01 051825" src="https://github.com/user-attachments/assets/128d987c-cf4e-4107-9186-c7c280280bb9" />
 
 
 ## Features
